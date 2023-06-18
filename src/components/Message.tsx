@@ -42,7 +42,7 @@ export default function Message({ text, from }: MessageInputs) {
 					id="messageText"
 					className="max-w-[80%] break-words border border-transparent rounded bg-violet-500 p-1"
 				>
-					<p className="text-gray-900 text-sm">{text}</p>
+					<p className="text-white text-sm">{text}</p>
 				</div>
 			</div>
 		);

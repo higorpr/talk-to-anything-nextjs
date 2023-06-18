@@ -16,7 +16,7 @@ export default function ChatPage() {
 	return (
 		<main
 			id="mainPage"
-			className="flex flex-col justify-center items-center h-full w-full bg-black"
+			className="flex flex-col justify-center items-center h-screen w-full bg-slate-900"
 		>
 			<header
 				id="header"
