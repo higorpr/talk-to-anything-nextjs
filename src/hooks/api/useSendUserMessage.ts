@@ -8,8 +8,7 @@ export default function useSendUserMessage() {
 		error: sendUserMessageError,
 		act: sendUserMessage,
 	} = UseAsync(
-		(user: string, message: string) =>
-			chatApi.sendUserMessage(user, message),
+		(user: string, message: string) => chatApi.sendUserMessage(message),
 		false
 	);
 
