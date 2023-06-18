@@ -38,6 +38,7 @@ export default function UserInput({
 				tempMessageData.push(chatEntry);
 				setMessageData(tempMessageData);
 				setLoading(false);
+				setUserMessage("");
 				setUpdatePage(!updatePage);
 			} catch (err) {
 				console.log(err);
