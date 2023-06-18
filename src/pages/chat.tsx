@@ -1,27 +1,15 @@
 import Message from "@/components/Message";
 import UserInput from "@/components/UserInput";
-import useGetChat from "@/hooks/api/useGetChat";
-import { useEffect, useState } from "react";
+import MessageContext from "@/contexts/MessageContext";
+import { useContext, useEffect, useState } from "react";
 
 export default function ChatPage() {
-	const [messages, setMessages] = useState([]);
 	const [updatePage, setUpdatePage] = useState(false);
-	const { getChat } = useGetChat();
-	console.log(messages);
-
-	async function retrieveChat(user: string) {
-		try {
-			const chat = await getChat(user);
-			console.log(chat);
-			setMessages(chat);
-		} catch (err) {
-			console.log(err);
-		}
-	}
+	const { messageData }: any = useContext(MessageContext);
+	const [messages, setMessages] = useState([]);
 
 	useEffect(() => {
-		const user = "You";
-		retrieveChat(user);
+		setMessages(messageData);
 		//eslint-disable-next-line
 	}, [updatePage]);
 
@@ -44,8 +32,9 @@ export default function ChatPage() {
 				id="chatContainer"
 				className="flex flex-col h-full w-full box-border pt-12 pb-16 pl-2 pr-2 overflow-scroll"
 			>
-				{messages.map((m) => (
-					<Message key={m.id} from={m.from} text={m.text} />
+				{messages.map((m, id) => (
+					//@ts-ignore
+					<Message key={id} from={m.from} text={m.text} />
 				))}
 			</div>
 			<UserInput updatePage={updatePage} setUpdatePage={setUpdatePage} />
