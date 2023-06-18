@@ -7,7 +7,6 @@ export default function ChatPage() {
 	const [updatePage, setUpdatePage] = useState(false);
 	const { messageData }: any = useContext(MessageContext);
 	const [messages, setMessages] = useState([]);
-	console.log(process.env.NEXT_PUBLIC_API_BASE_URL);
 
 	useEffect(() => {
 		setMessages(messageData);
