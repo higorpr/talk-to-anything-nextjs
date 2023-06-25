@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react";
 import Example from "./Example";
+import { ChatContainerProps, FirstStepsProps } from "@/models/propsInterfaces";
 
-export default function ExamplesContainer() {
+export default function ExamplesContainer({
+	setUpdateChatMessage,
+	setLoading,
+	setMessageToSend,
+	updateChat,
+	setUpdateChat,
+}: FirstStepsProps) {
 	const [tutorialMessages, setTutorialMessages]: any = useState([]);
 
 	useEffect(() => {
@@ -23,7 +30,15 @@ export default function ExamplesContainer() {
 			className="flex mt-4 flex-col justify-center items-center"
 		>
 			{tutorialMessages.map((tutorial: any, idx: number) => (
-				<Example key={idx} tutorial={tutorial} />
+				<Example
+					key={idx}
+					tutorial={tutorial}
+					setUpdateChatMessage={setUpdateChatMessage}
+					setLoading={setLoading}
+					setMessageToSend={setMessageToSend}
+					updateChat={updateChat}
+					setUpdateChat={setUpdateChat}
+				/>
 			))}
 		</div>
 	);

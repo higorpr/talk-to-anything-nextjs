@@ -30,10 +30,10 @@ export default function ChatPage() {
 				messageToSend={messageToSend}
 				setMessageToSend={setMessageToSend}
 				updateChat={updateChat}
+				setUpdateChat={setUpdateChat}
 			/>
 
 			<UserInput
-				updateChatMessage={updateChatMessage}
 				setUpdateChatMessage={setUpdateChatMessage}
 				loading={loading}
 				setLoading={setLoading}

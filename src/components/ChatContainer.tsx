@@ -1,7 +1,7 @@
 import { Fragment, useContext, useEffect } from "react";
 import FirstSteps from "./FirstSteps";
 import Message from "./Message";
-import { ChatContainerProps } from "@/models/propsInterfaces";
+import { ChatContainerProps, MessageInputs } from "@/models/propsInterfaces";
 import MessageContext from "@/contexts/MessageContext";
 import useSendUserMessage from "@/hooks/api/useSendUserMessage";
 
@@ -12,6 +12,7 @@ export default function ChatContainer({
 	messageToSend,
 	setMessageToSend,
 	updateChat,
+	setUpdateChat,
 }: ChatContainerProps) {
 	//@ts-ignore
 	const { messageData, setMessageData } = useContext(MessageContext);
@@ -28,6 +29,7 @@ export default function ChatContainer({
 	async function sendMessageToChat() {
 		try {
 			const tempMessageData = [...messageData];
+			console.log(tempMessageData);
 			const chatResponse = await sendUserMessage(messageToSend);
 			const chatEntry = {
 				from: "TalkToAnything",
@@ -47,13 +49,19 @@ export default function ChatContainer({
 	return (
 		<div id="chatContainer" className="w-full h-full">
 			{messageData.length === 0 ? (
-				<FirstSteps />
+				<FirstSteps
+					setUpdateChatMessage={setUpdateChatMessage}
+					setLoading={setLoading}
+					setMessageToSend={setMessageToSend}
+					updateChat={updateChat}
+					setUpdateChat={setUpdateChat}
+				/>
 			) : (
 				<div
 					id="chatContainer"
 					className="flex flex-col h-full w-full box-border pt-12 pb-16 pl-2 pr-2 overflow-scroll"
 				>
-					{messageData.map((m, id) => (
+					{messageData.map((m: MessageInputs, id: number) => (
 						//@ts-ignore
 						<Message key={id} from={m.from} text={m.text} />
 					))}

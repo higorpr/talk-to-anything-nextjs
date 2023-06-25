@@ -8,7 +8,6 @@ import { TbSend } from "react-icons/tb";
 import { TailSpin } from "react-loader-spinner";
 
 export default function UserInput({
-	updateChatMessage,
 	setUpdateChatMessage,
 	loading,
 	setLoading,
@@ -27,7 +26,6 @@ export default function UserInput({
 	}
 
 	async function displayUserMessage(event: React.MouseEvent | null = null) {
-		console.log(updateChatMessage);
 		if (event) {
 			event.preventDefault();
 		}

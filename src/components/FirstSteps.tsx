@@ -1,6 +1,13 @@
+import { FirstStepsProps, UserInputProps } from "@/models/propsInterfaces";
 import ExamplesContainer from "./ExamplesContainer";
 
-export default function FirstSteps() {
+export default function FirstSteps({
+	setUpdateChatMessage,
+	setLoading,
+	setMessageToSend,
+	updateChat,
+	setUpdateChat,
+}: FirstStepsProps) {
 	return (
 		<div
 			id="firstSteps"
@@ -18,7 +25,13 @@ export default function FirstSteps() {
 			>
 				Examples
 			</h2>
-			<ExamplesContainer />
+			<ExamplesContainer
+				setUpdateChatMessage={setUpdateChatMessage}
+				setLoading={setLoading}
+				setMessageToSend={setMessageToSend}
+				updateChat={updateChat}
+				setUpdateChat={setUpdateChat}
+			/>
 		</div>
 	);
 }
