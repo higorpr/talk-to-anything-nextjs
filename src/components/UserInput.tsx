@@ -1,56 +1,64 @@
 import MessageContext from "@/contexts/MessageContext";
+import TutorialContext from "@/contexts/TutorialContext";
 import useSendUserMessage from "@/hooks/api/useSendUserMessage";
 import { UserInputProps } from "@/models/propsInterfaces";
-import React, { ChangeEvent, useContext, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { TbSend } from "react-icons/tb";
 import { TailSpin } from "react-loader-spinner";
 
 export default function UserInput({
-	updatePage,
-	setUpdatePage,
+	updateChatMessage,
+	setUpdateChatMessage,
+	loading,
+	setLoading,
+	setMessageToSend,
+	updateChat,
+	setUpdateChat,
 }: UserInputProps) {
 	const [userMessage, setUserMessage] = useState("");
-	const { sendUserMessage } = useSendUserMessage();
-	const [loading, setLoading] = useState(false);
 	const { messageData, setMessageData }: any = useContext(MessageContext);
+
+	useEffect(() => {}, []);
 
 	function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
 		event.preventDefault();
 		setUserMessage(event.target.value);
 	}
 
-	async function sendMessage(event: React.MouseEvent | null = null) {
+	async function displayUserMessage(event: React.MouseEvent | null = null) {
+		console.log(updateChatMessage);
 		if (event) {
 			event.preventDefault();
 		}
 
 		if (userMessage.trim() !== "") {
+			// App shows user message after pressing send icon
+			const tempMessageData = [...messageData];
+			const user = "You";
+			const chat = "TalkToAnything";
+			const userEntry = { from: user, to: chat, text: userMessage };
+			tempMessageData.push(userEntry);
+			setMessageData(tempMessageData);
+
+			// App stores the user message and flags to chat that it should be sent
+			setUpdateChat(!updateChat);
+			setUpdateChatMessage(true);
+			setMessageToSend(userMessage);
+
+			// App disables user input
 			setLoading(true);
-			try {
-				const tempMessageData = [...messageData];
-				const user = "You";
-				const chat = "TalkToAnything";
-				const chatResponse = await sendUserMessage(userMessage);
-				const userEntry = { from: user, to: chat, text: userMessage };
-				tempMessageData.push(userEntry);
-				const chatEntry = { from: chat, to: user, text: chatResponse };
-				tempMessageData.push(chatEntry);
-				setMessageData(tempMessageData);
-				setLoading(false);
-				setUserMessage("");
-				setUpdatePage(!updatePage);
-			} catch (err) {
-				console.log(err);
-			}
+
+			// App erases user input
+			setUserMessage("");
 		} else {
 			setUserMessage("");
 		}
 	}
 
 	function checkKey(event: React.KeyboardEvent<HTMLElement>) {
-		if (event.key === "Enter") {
-			sendMessage();
+		if (event.key === "Enter" && userMessage.trim() !== "") {
+			displayUserMessage();
 		}
 	}
 
@@ -84,7 +92,7 @@ export default function UserInput({
 							value={{ size: "25px", color: "#000000" }}
 						>
 							<TbSend
-								onClick={sendMessage}
+								onClick={displayUserMessage}
 								className="cursor-pointer"
 							/>
 						</IconContext.Provider>

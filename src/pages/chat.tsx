@@ -1,17 +1,12 @@
-import Message from "@/components/Message";
+import ChatContainer from "@/components/ChatContainer";
 import UserInput from "@/components/UserInput";
-import MessageContext from "@/contexts/MessageContext";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ChatPage() {
-	const [updatePage, setUpdatePage] = useState(false);
-	const { messageData }: any = useContext(MessageContext);
-	const [messages, setMessages] = useState([]);
-
-	useEffect(() => {
-		setMessages(messageData);
-		//eslint-disable-next-line
-	}, [updatePage]);
+	const [updateChatMessage, setUpdateChatMessage] = useState(false);
+	const [messageToSend, setMessageToSend] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [updateChat, setUpdateChat] = useState(false);
 
 	return (
 		<main
@@ -28,16 +23,24 @@ export default function ChatPage() {
 				</h1>{" "}
 			</header>
 
-			<div
-				id="chatContainer"
-				className="flex flex-col h-full w-full box-border pt-12 pb-16 pl-2 pr-2 overflow-scroll"
-			>
-				{messages.map((m, id) => (
-					//@ts-ignore
-					<Message key={id} from={m.from} text={m.text} />
-				))}
-			</div>
-			<UserInput updatePage={updatePage} setUpdatePage={setUpdatePage} />
+			<ChatContainer
+				updateChatMessage={updateChatMessage}
+				setUpdateChatMessage={setUpdateChatMessage}
+				setLoading={setLoading}
+				messageToSend={messageToSend}
+				setMessageToSend={setMessageToSend}
+				updateChat={updateChat}
+			/>
+
+			<UserInput
+				updateChatMessage={updateChatMessage}
+				setUpdateChatMessage={setUpdateChatMessage}
+				loading={loading}
+				setLoading={setLoading}
+				setMessageToSend={setMessageToSend}
+				updateChat={updateChat}
+				setUpdateChat={setUpdateChat}
+			/>
 		</main>
 	);
 }
